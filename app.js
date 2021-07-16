@@ -57,8 +57,12 @@ app.get("/", (req, res) => {
 app.post("/", upload.single("file-to-upload"), async (req, res) => {
   try {
     let hotDogCount = 0;
-    // Upload image to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path);
+    // Upload image to cloudinary 
+    // added 2nd param based on this https://discord.com/channels/735923219315425401/769335740152152095/860238596422369310
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'hotdog',
+      use_filename: true,
+    });
     const objectURL = result.secure_url;
 
     // Analyze a URL image
